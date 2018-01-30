@@ -1,4 +1,4 @@
-# Liveagent Connected on Line Bot with Celery (Deploy to Heroku)
+# Liveagent Connected on Line Bot with Celery (Heroku)
 
 ## 開発言語
 - Python 3.6.4
