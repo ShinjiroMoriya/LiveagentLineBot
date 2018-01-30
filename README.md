@@ -1,9 +1,12 @@
-# Liveagent Connected on Line Bot with Celery
+# Liveagent Connected on Line Bot with Celery (Deploy to Heroku)
+
+## 開発言語
+- Python 3.6.4
 
 ## Backend
-- Django
+- Django 2.0.1
 - Redis
-- PostgresSQL
+- Postgres
 
 ## Requierements (pip)
 - Django
