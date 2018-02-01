@@ -48,6 +48,3 @@ $ python manage.py runserver
 ```
 $ celery -A line worker -l info
 ```
-
-### Sushi
-<a href="https://osushi.love/jiromorimori" target="_blank">https://osushi.love/jiromorimori</a>
