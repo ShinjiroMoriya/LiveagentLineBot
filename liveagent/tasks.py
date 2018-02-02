@@ -69,9 +69,8 @@ def reply_connect(reply_token):
 def reply_text(reply_token, text=None):
     if text is None:
         rep_text = [
-            '良い天気だね', 'ナイス！', 'わお', 'はい？', '面白い事言うね',
-            'それ良いね', 'やってみよう', 'なんですか？', '知らないです。',
-            'また明日！', 'はいよ',
+            'はい？', 'それ良いね', 'なんですか？', '知らないです。',
+            'はいよ', 'ん', 'そうね',
         ]
         text = random.choice(rep_text)
     lba.reply_message(reply_token, TextSendMessage(
