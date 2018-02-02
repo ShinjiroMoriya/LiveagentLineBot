@@ -20,34 +20,41 @@ class LineCallbackView(View):
             line_id = event.source.sender_id
             reply_token = event.reply_token
 
-            if isinstance(event, MessageEvent):
-                if event.message.type != 'text':
-                    return HttpResponse()
+            try:
+                if isinstance(event, MessageEvent):
+                    if event.message.type != 'text':
+                        return HttpResponse()
 
-                message = event.message.text
-                session = Session.get_session(line_id)
+                    message = event.message.text
+                    session = Session.get_session(line_id)
 
-                if session.get('responder') == 'LIVEAGENT':
-                    res = send_message(line_id, message)
-                    if res is False:
-                        reply_text.delay(
-                            reply_token, 'もう一度送ってください。')
-                    else:
-                        get_messages.delay(line_id)
-
-                else:
-                    if event.message.text == '接続':
-                        reply_text.delay(reply_token, 'お待ちください。')
-                        is_connect = connect_liveagent(line_id)
-                        if is_connect is True:
+                    if session.get('responder') == 'LIVEAGENT':
+                        res = send_message(line_id, message)
+                        if res is False:
+                            reply_text.delay(
+                                reply_token, 'もう一度送ってください。')
+                        else:
                             get_messages.delay(line_id)
 
-                        else:
-                            reply_text.delay(
-                                reply_token,
-                                ('担当者が席をはずしておりますので、'
-                                 '時間をあけて再度お呼び出しください。'))
                     else:
-                        reply_text.delay(reply_token)
+                        if event.message.text == '接続':
+                            reply_text.delay(reply_token, 'お待ちください。')
+                            is_connect = connect_liveagent(line_id)
+                            if is_connect is True:
+                                get_messages.delay(line_id)
+
+                            else:
+                                reply_text.delay(
+                                    reply_token,
+                                    ('担当者が席をはずしておりますので、\n'
+                                     '時間をあけて再度お呼び出しください。'))
+                        else:
+                            reply_text.delay(reply_token)
+
+            except:
+
+                reply_text(reply_token,
+                           ('障害が発生しております。\n'
+                            '時間をあけて再度ご利用ください。'))
 
         return HttpResponse()
